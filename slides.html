@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Radare2</title>
+    <meta charset="utf-8">
+    <style>
+		@font-face {
+			font-family: 'Barrio';
+			font-style: normal;
+			font-weight: 400;
+			src: local('Barrio Regular'), local('Barrio-Regular'), url(Barrio.ttf) format('truetype');
+		}
+
+		h1 { font-family: Barrio; }
+		h1:before, h2:before, h3:before {
+			content: '» ';
+			color: #f0082d;
+		}
+
+		em{
+			color: #f0082d;
+			font-weight:bold;
+		}
+
+		body {
+			font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
+		}
+
+		a {
+			color:#f0082d;
+			text-decoration:none;
+		}
+
+		.remark-code, code  {
+			background-color: #f3f3f3;
+			font-size: 80%;
+		}
+		.hljs-default .hljs-string {
+			font-weight: bold;
+			color:#f0082d;
+		}
+		.hljs-default .hljs-keyword {
+			color:#a02724;
+		}
+
+		blockquote {
+			border-left: 10px solid #ccc;
+			padding: 10px;
+			padding-left: 20px;
+			background-color: #F3F3F3;
+		}
+
+		.remark-slide-content:after {
+			content: "";
+			position: absolute;
+			top: 10px;
+			right: 0px;
+			height: 40px;
+			width: 120px;
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-image: url('logo.png');
+		}
+
+		.footnote {
+			position: absolute;
+			bottom: 3em;
+			font-size: medium;
+		}
+
+		.remark-slide-content {
+			font-size: x-large;
+			padding: 1em 0.5em 1em 2em;
+			border-left: 10px solid #f0082d;
+			background-size: content;
+		}
+
+		.remark-slide-number {
+			color: #000;	
+			font-size: medium;
+		}
+
+		.left-column {
+			width: 55%;
+			float: left;
+		}
+		.right-column {
+			width: 45%;
+			float: right;
+		}
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+name: inverse
+layout: true
+class: middle
+---
+.left-column[
+# Radare2
+No money to buy IDA?<br>
+No java to run Ghidra?<br>
+No time to write Binary Ninja plugins to make it useful?<br>
+Failed to get a seat at the miasm workshop?<br>
+]
+
+.right-column[
+<img src="./r2.png" alt="snuffy" height="100" style="padding-top:100px">
+]
+
+---
+
+# Cheers
+
+ - Xarkes for inviting us!
+ 
+---
+background-image: url(end.jpg)
+background-size: cover
+
+   </textarea>
+    <script src="./remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create({highlightLines: true});
+    </script>
+  </body>
+</html>
