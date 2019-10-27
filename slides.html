@@ -99,7 +99,7 @@ class: middle, center
 
 # Workshop Radare2
 
-<img src="./r2.png" alt="snuffy" height="100" style="margin:auto;">
+<img src="./r2.png"  height="100" style="margin:auto;">
 
 ## Grehack 2019
 
@@ -202,7 +202,7 @@ Welcome to radare2!
 
 # Sushi — BSides Vancouver CTF 2015
 
-XXX: logo
+![logo bsides vc](./bsides-vancouver.png)
 
 - Cool CTF, organised by nice people
 - Super-easy challenge
@@ -314,14 +314,84 @@ while(True):
 
 ---
 
-# r0pbaby
+# CSAW Quals 2013 - Diary (Exploitation 300)
 
-- Defcon 2015 Quals
-- Easy ROP pwn
+
+- CSAW quals 2013
+- easy CTF challenge
 
 ---
 
+# Simili-strace (ex.)
+
+- How to open the binary in `d`debug mode?
+- How to trace syscalls à la `strace`?
+
+---
+
+# Simili-strace
+
+- `r2 -d -b 64 ./fil_chal`
+- `dcs*`
+
+---
+
+# Find the username/password (ex.)
+
+---
+
+# Find the vulnerability (ex.)
+
+- Buffer on the stack: 0x400
+- Integer overflow: feed -1
+
+---
+
+# Mitigations (ex.)
+
+- PIE?
+- RELRO?
+- NX?
+- Canary?
+- ASLR!
+
+---
+
+# Get RIP control (ex.)
+
+---
+
+# Designing our ROP chain
+
+1. Leak libc address of read(1) and return to the vulnerable
+function
+2. Compute the offset of system(2)
+3. Read our command, and write it somewhere
+4. Call system(3) on it
+5. Send our command 
+
+---
+
+# Plot twist
+
+1. Stack is executable
+2. No jmp esp gadget
+3. Write jmp esp in the .data segment
+4. Return to it
+5. Send our reverse-shell shellcode
+
+---
+
+# Find a writteable place (ex.)
+
+- iS~w
+
+---
+
+# Exploit
+
 TODO(jvoisin)
+
 
 ---
 
