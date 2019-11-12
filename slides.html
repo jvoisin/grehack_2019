@@ -334,32 +334,6 @@ while(True):
 
 ---
 
-# Simili-strace (ex.)
-
-- How to tell the debugger that we're dealing with x86_64?
-- How to open the binary in `d`ebug mode?
-- How to trace syscalls à la `strace`?
-
----
-
-# Simili-strace
-
-- `r2 -d -b 64 ./fil_chal`
-- `dcs*`
-
----
-
-# Find the username/password (ex.)
-
----
-
-# Find the vulnerability (ex.)
-
-- Buffer on the stack: 0x400
-- Integer overflow: feed -1
-
----
-
 # Mitigations (ex.)
 
 - PIE?
@@ -367,6 +341,70 @@ while(True):
 - NX?
 - Canary?
 - ASLR!
+
+---
+
+# What is the binary doing? (ex.)
+
+- Hint1: some networking stuff
+- Hint2: on what port does it listen?
+
+---
+
+# Find the username/password (ex.)
+
+---
+
+# Find the username/password (ex.)
+
+- `csaw2013`
+- `S1mplePWD`
+
+---
+
+# What is the binary doing? (ex.)
+
+---
+
+# What is the binary doing?
+
+1. Asking for a `size` in `fcn.08048e52`
+1. Checks that `size+1` isn't superior to `0x400` in `fcn.08048efe`
+1. Read `size` chars
+1. Write the chars to a file
+1. Delete the file
+
+---
+
+# Find the vulnerability (ex.)
+
+- Hint1: What could the vulnerability type be?
+- Hint2: `atoi`
+
+
+---
+
+# Find the vulnerability (ex.)
+
+- `size` is passed to `atoi`, returning an `int`
+- `if size + 1 > 0x400` → integer overflow!
+- resulting in a linear stack-based buffer-overflow
+
+---
+
+# Getting eip control (ex.)
+
+```nasm
+$ ragg2 -P 128 -r
+$ r2 -d ./fil_chal
+[0x7fd1f7ebc090]> dc
+[0x004005f2]> dr=
+[0x004005f2]> pd 1 @ rip
+[0x004005f2]> pxW 4 @ rsp
+[0x004005f2]> woO `pxW 4 @ rsp~[1]`
+```
+
+1056 bytes before overwriting EIP
 
 ---
 
@@ -382,6 +420,8 @@ function
 3. Read our command, and write it somewhere
 4. Call system(3) on it
 5. Send our command 
+
+But…
 
 ---
 
@@ -403,7 +443,14 @@ function
 
 # Exploit
 
-TODO(jvoisin)
+```
+read
+pop;pop;pop;ret
+4 (socket fd)
+writeable addr
+2 (size of jmp esp gadget)
+writeable addr
+```
 
 
 ---
