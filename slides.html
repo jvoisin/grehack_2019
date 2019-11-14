@@ -402,8 +402,23 @@ $ r2 -d ./sushi-a6cbc...8cb4f98c8
 [0x004005f2]> dr=
 [0x004005f2]> pd 1 @ rip
 [0x004005f2]> pxW 4 @ rsp
-[0x004005f2]> woO `pxW 4 @ rsp~[1]`
+[0x004005f2]> wopO `pxW 4 @ rsp~[1]`
 ```
+---
+
+# Getting RIP control (ex.)
+
+```nasm
+$ ragg2 -P 128 -r
+$ r2 -d ./sushi-a6cbc...8cb4f98c8
+[0x7fd1f7ebc090]> dc
+[0x004005f2]> dr=
+[0x004005f2]> pd 1 @ rip
+[0x004005f2]> pxW 4 @ rsp
+[0x004005f2]> wopO `pxW 4 @ rsp~[1]`
+```
+
+72 chars until RIP control
 
 ---
 
@@ -484,6 +499,34 @@ while(True):
 ---
 
 # What is the binary doing? (ex.)
+
+---
+
+# What is the binary doing?
+
+```C
+void __cdecl read_data(int fd, int size) {
+ if ( size + 1 <= 0x400 ) {
+  char buf[0x41C];
+  int nbread = recv(fd, &buf, size, 0);
+  else {
+   nbread = nbread > 0x400? 1024; nbread;
+   if (!check_nonnull(&buf, nbread)) {
+    fprintf(stderr, "%s\n", "This entry had Non-ASCII characters.. not writing entry..");
+   } else {
+    char s[0x80] = {0};
+    snprintf(&s, 0x7Fu, "diary%llu.txt", global_cpt);
+    FILE* stream = fopen(&s, "w");
+    if ( stream ) {
+     if ( nbread == fwrite(&buf, 1u, nbread, stream))
+      fflush(stream)
+     fclose_and_remove(stream, &s);
+    }
+   }
+  }
+ }
+}
+````
 
 ---
 
