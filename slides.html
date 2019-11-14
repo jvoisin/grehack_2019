@@ -221,7 +221,7 @@ class: middle, center
 
 <img src="./r2.png"  height="100" style="margin:auto;">
 
-## Grehack 2019
+## Grehack 2019 — `radare2` workshop
 
 ---
 class: left, top
@@ -230,7 +230,9 @@ class: left, top
 
 - No money to buy IDA?<br>
 - No java to run Ghidra?<br>
-- No time to write Binary Ninja plugins to make it useful?<br>
+- No time to write Binary Ninja plugins to make it somewhat useful?<br>
+- No Mac to run Hopper?<br>
+- No Windows to run WinDBG?<br>
 - Failed to get a seat at the [miasm](https://grehack.fr/2019/workshops#miasm) workshop?<br>
 
 Welcome to radare2!
@@ -636,7 +638,18 @@ while(True):
 - RELRO?
 - NX?
 - Canary?
-- ASLR!
+- ASLR?
+
+---
+
+# Mitigations (ex.)
+
+- PIE → Nope
+- RELRO → Nope
+- NX → Nope
+- Canary → Nope
+- ASLR → Yup
+
 
 ---
 
@@ -653,12 +666,24 @@ while(True):
 
 # Find the username/password (ex.)
 
-- `csaw2013`
-- `S1mplePWD`
+```nasm
+[0x080488c0]> izz~rodata:30..-5
+98  0x00001a28 0x08049a28 38  39   .rodata   ascii   Welcome!\nhttp://youtu.be/KmtzQCSh6xk\n\n
+99  0x00001a4f 0x08049a4f 8   9    .rodata   ascii   csaw2013
+100 0x00001a58 0x08049a58 9   10   .rodata   ascii   S1mplePWD
+117 0x000020c0 0x0000008e 7   8    .shstrtab ascii   .rodata
+[0x080488c0]> 
+```
+
+- login: `csaw2013`
+- passwd: `S1mplePWD`
 
 ---
 
 # What is the binary doing? (ex.)
+
+- Hint1: What is the binary reading?
+- Hint2: What is it doing with the binary?
 
 ---
 
@@ -773,13 +798,27 @@ But y'all have different libc, and I'm lazy.
 
 # Find a writteable place (ex.)
 
-- iS~w
+```nasm
+$ r2 -d ./Dairy/fil_chal
+[0xf7fc60b0]> db main
+[0xf7fc60b0]> dc
+hit breakpoint at: 8048974
+[0x08048974]> iS~w
+18  0x00001e88    0x8 0x0804ae88    0x8 -rw- .ctors
+19  0x00001e90    0x8 0x0804ae90    0x8 -rw- .dtors
+20  0x00001e98    0x4 0x0804ae98    0x4 -rw- .jcr
+21  0x00001e9c   0xd8 0x0804ae9c   0xd8 -rw- .dynamic
+22  0x00001f74   0x8c 0x0804af74   0x8c -rw- .got
+23  0x00002000    0x8 0x0804b000    0x8 -rw- .data
+24  0x00002008    0x0 0x0804b008   0x18 -rw- .bss
+[0x08048974]>
+```
 
 ---
 
 # Exploit
 
-```
+```python
 huge_number
 padding*0x420
 read
