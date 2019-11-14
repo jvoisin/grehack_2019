@@ -26,8 +26,10 @@ s = socket.socket()
 s.connect(('localhost', 34266))
 
 s.send("csaw2013")
+time.sleep(.5)
 s.recv(1024)
 s.send("S1mplePWD")
+time.sleep(.5)
 s.recv(1024)
 
 print('[+] Credentials sent')
