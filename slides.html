@@ -306,7 +306,62 @@ Welcome to radare2!
 
 - How do you print a hexdump?
 - How do you analyze and opcode?
-- XXX
+- How do I get the import information ?
+
+---
+
+# Commands (ex.)
+
+- How do you print a hexdump? `px`
+- How do you analyze and opcode? `ao`
+- How do I get the import information `ii`
+
+---
+
+# The information command `i`
+
+- What is the file format / architecture / Bits if the binary ?
+
+- What are the strings present in the whole binary ?
+
+---
+
+# The information command `i`
+
+- What is the file format / architecture / Bits if the binary ? `iI`
+
+- What are the strings present in the whole binary ? `izz`
+---
+# Open command
+
+`r2` open the binary and use binary information
+`r2 -n` do not use the binary information
+`r2 -w` write mode
+`oo`, `oon`, `oow` reopen in a given mode
+
+---
+
+# Print command
+
+- `pB` print bits
+- `px` `pxe` `p8` print hexadecimal
+- `p=` visualization mode
+
+---
+
+# Seek command
+
+- `s 0xXXXX` seek to offset
+- `s` show current function
+- `s-` seekback to previous offset
+- `@ temporary seek`
+
+---
+
+# ! redirections
+
+- `!ls` vs `ls` external/inernal ls
+- `~` vs '| grep'
 
 ---
 
@@ -317,7 +372,7 @@ Welcome to radare2!
 
 ---
 
-# Internal basics
+# Internal basics, bash FTW
 
 - `pd 1; ao 1`
 - `ao | grep name`
