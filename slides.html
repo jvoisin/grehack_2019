@@ -214,8 +214,7 @@
   </head>
   <body>
     <textarea id="source">
----
-class: middle, center
+class: middle, top
 
 # Workshop Radare2
 
@@ -224,7 +223,6 @@ class: middle, center
 ## Grehack 2019 — `radare2` workshop
 
 ---
-class: left, top
 
 # Radare2 workshop!
 
@@ -300,6 +298,7 @@ Welcome to radare2!
 - Everything is documented with `?`
 	- `pd?`
 	- recursive help via `?*`
+- Open a binary with `radare2 /your/binary`
 
 
 ---
@@ -308,38 +307,43 @@ Welcome to radare2!
 
 - How do you print a hexdump?
 - How do you analyze and opcode?
-- How do I get the import information ?
+- How do I get the import information?
 
 ---
 
 # Commands (ex.)
 
-- How do you print a hexdump? `px`
-- How do you analyze and opcode? `ao`
-- How do I get the import information `ii`
+- How do you print a hexdump → `px`
+- How do you analyze and opcode → `ao`
+- How do I get the import information → `ii`
+
+
+- Remember about `?*|grep`
 
 ---
 
 # The information command `i`
 
-- What is the file format / architecture / Bits if the binary ?
+- What is the file format / architecture / word size of a binary?
 
-- What are the strings present in the whole binary ?
+- What are the strings present in a binary?
 
 ---
 
 # The information command `i`
 
-- What is the file format / architecture / Bits if the binary ? `iI`
+- What is the file format / architecture / word size of a binary → `iI`
 
-- What are the strings present in the whole binary ? `izz`
+- What are the strings present in a binary → `izz`
+
 ---
+
 # Open command
 
-`r2` open the binary and use binary information
-`r2 -n` do not use the binary information
-`r2 -w` write mode
-`oo`, `oon`, `oow` reopen in a given mode
+- `r2` open the binary and use binary information
+- `r2 -n` do not use the binary information
+- `r2 -w` write mode
+- `oo`, `oon`, `oow` reopen in a given mode
 
 ---
 
@@ -356,33 +360,34 @@ Welcome to radare2!
 - `s 0xXXXX` seek to offset
 - `s` show current function
 - `s-` seekback to previous offset
-- `@ temporary seek`
+- `@` temporary seek
 
 ---
 
 # ! redirections
 
-- `!ls` vs `ls` external/inernal ls
-- `~` vs '| grep'
+- `!ls` vs `ls` external/internal ls
+- `~` vs `| grep`
 
 ---
 
 # Pratice
 
-- Print the md5 of the crackme - crackme.01.bin (External system command and internal one)
+- Print the md5 of the `crackme.01.bin` file
+	- External system command
+	- Internal system command
 - Print the first 0x50 bytes of the header of the binary in hexadecimal
-- Where is the offset of main located physically in the file?
+- What is the physical address of the `main` function?
 
 ---
 
 # Pratice
 
-- Print the md5 of the crackme - crackme.01.bin (External system command and internal one)
-  `!md5 XXX / r2 -n` or `oon` and `ph $s  @ 0`
-- Print the first 0x50 bytes of the header of the binary in hexadecimal
-  `px 0x50 @ 0`
-- Where is the offset of main located physically in the file?
-  `?p @ main`
+- Print the md5 of the `crackme.01.bin` file
+	- External system command → `!md5 XXX / r2 -n`
+	- Interal system command → `oon` then `ph $s @ 0`
+- Print the first 0x50 bytes of the header of the binary in hexadecimal → `px 0x50 @ 0`
+- What is the physical address of the `main` function → `?p @ main`
 
 ---
 
@@ -624,8 +629,9 @@ while(True):
 
 ---
 
-# CSAW Quals 2013 - Diary (Exploitation 300)
+# CSAW Quals 2013 - Diary (exp300)
 
+![logo csaw](./csaw.png)
 
 - CSAW quals 2013
 - easy CTF challenge
