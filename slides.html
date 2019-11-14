@@ -302,6 +302,75 @@ Welcome to radare2!
 
 ---
 
+# Do you want to automate ?
+
+- internal ways of sequencing commands
+- r2pipe (IPC)
+
+---
+
+# Internal basics
+
+- pd 1; ao 1
+- ao | grep name
+- ao > test.txt
+- ao >> test.txt
+
+---
+
+# Internal loops
+
+- classic loop : @@=$$ $$+2
+- foreach : @@i
+- loop over a flag: afi @@ fcn.* ~name
+- and many others... @@? ;)
+
+---
+
+# Define Macros
+
+- define it : (foobar, pd1, ao)
+- use it : .(foobar)
+- don't remember your macro ? (*
+- remove it : (-foobar)
+
+---
+
+# Macros with arguments
+
+- (foobar arg1, pd $0)
+
+---
+
+# You don't like r2 cli ?
+
+- r2pipe works with your favourite language
+- NodeJS, Python, Java, Ruby, ...
+
+---
+
+# Install r2pipe
+
+- npm install r2pipe
+- pip install r2pipe
+
+---
+
+# r2pipe use
+
+```
+import r2pipe
+
+r2 = r2pipe.open('./sushi-a6cb...98c8')
+r2.cmd('aa')
+print(r2.cmd('pdf'))
+r2.cmd('s main')
+print(r2.cmd('pdf'))
+```
+
+---
+
+
 # How do I impress my CTF 🏴 pals with it?
 
 ### Excellent, we can attack in any direction!
@@ -628,75 +697,6 @@ writeable addr
 #
 
 ---
-
-# Do you want to automate ?
-
-- internal ways of sequencing commands
-- r2pipe (IPC)
-
----
-
-# Internal basics
-
-- pd 1; ao 1
-- ao | grep name
-- ao > test.txt
-- ao >> test.txt
-
----
-
-# Internal loops
-
-- classic loop : @@=$$ $$+2
-- foreach : @@i
-- loop over a flag: afi @@ fcn.* ~name
-- and many others... @@? ;)
-
----
-
-# Define Macros
-
-- define it : (foobar, pd1, ao)
-- use it : .(foobar)
-- don't remember your macro ? (*
-- remove it : (-foobar)
-
----
-
-# Macros with arguments
-
-- (foobar arg1, pd $0)
-
----
-
-# You don't like r2 cli ?
-
-- r2pipe works with your favourite language
-- NodeJS, Python, Java, Ruby, ...
-
----
-
-# Install r2pipe
-
-- npm install r2pipe
-- pip install r2pipe
-
----
-
-# r2pipe use
-
-```
-import r2pipe
-
-r2 = r2pipe.open('./sushi-a6cb...98c8')
-r2.cmd('aa')
-print(r2.cmd('pdf'))
-r2.cmd('s main')
-print(r2.cmd('pdf'))
-```
-
----
-
 # Documentations and friendly neighbours
 
 
