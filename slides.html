@@ -365,6 +365,34 @@ Welcome to radare2!
 
 ---
 
+# Pratice
+
+- Print the md5 of the crackme - crackme.01.bin (External system command and internal one)
+- Print the first 0x50 bytes of the header of the binary in hexadecimal
+- Where is the offset of main located physically in the file?
+
+---
+
+# Pratice
+
+- Print the md5 of the crackme - crackme.01.bin (External system command and internal one)
+  `!md5 XXX / r2 -n` or `oon` and `ph $s  @ 0`
+- Print the first 0x50 bytes of the header of the binary in hexadecimal
+  `px 0x50 @ 0`
+- Where is the offset of main located physically in the file?
+  `?p @ main`
+
+---
+
+# modes
+
+- `j` json
+- `q` quiet
+- `qq` very quiet
+- `*` r2 command
+
+---
+
 # Do you want to automate ?
 
 - internal ways of sequencing commands
