@@ -501,13 +501,7 @@ class: middle, left
 - use it : `.(foobar)`
 - don't remember your macro ? `(*`
 - remove it : `(-foobar)`
-
----
-class: middle, left
-
-# Macros with arguments
-
-- `(foobar arg1, pd $0)`
+- with arguments: `(foobar arg1, pd $0)`
 
 ---
 class: middle, left
@@ -545,35 +539,43 @@ print(r2.cmdj('pdfj'))
 class: middle, left
 # Script exercise
 
-Let's write a small python script:
-- use `/bin/ls` binary
-- get all functions
-- for each nonamed function print the first called (3) the functions does
-
----
-class: middle, left
-# Script exercise
+Print a tree of all functions, using r2pipe!
 
 ```python
 import r2pipe
 
-r2 = r2pipe.open('/bin/ls')
-r2.cmd('aaa')
+r2 = r2pipe.open('./crackme0x01')
+r2.cmd('aa')
+print(r2.cmd('pdf'))
 r2.cmd('s main')
+print(r2.cmdj('pdfj'))
+```
 
-renamedf = []
-func = ''
-functions = r2.cmdj('aflj')
-for i in functions:
-    func = ''
-    if "fcn." in i['name']:
-        subf = r2.cmdj('pdfj ' + i['name'])
-        for j in subf['ops']:
-            if j['type'] == 'call':
-                func = func + ' ' + j['disasm'].split('.')[-1]
-                if len(func) > 25:
-                    break
-        print(i['name'] + " → " + func)
+
+---
+class: middle, left
+# Script exercise (solution)
+
+```python
+r2 = r2pipe.open(sys.argv[1])
+r2.cmd("aa")
+def dump_fun(name, depth=0):
+    print('\t'*depth + name)
+    r2.cmd('s %s' % name)
+    r2.cmd('af %s' % name)
+    for line in r2.cmdj('pdfj @%s' % name)['ops']:
+        if line['type'] != 'call':
+            continue
+        nxt = line['disasm'].split(' ')[1]  # ugh
+        if 'sym.imp.' in nxt or nxt == name:
+            continue
+        try:
+            dump_fun(nxt, depth+1)
+        except:
+            continue
+
+dump_fun('main')
+
 ```
 
 ---
