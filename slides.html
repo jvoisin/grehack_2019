@@ -373,9 +373,7 @@ Welcome to radare2!
 
 # Pratice
 
-- Print the md5 of the `crackme.01.bin` file
-	- External system command
-	- Internal system command
+- Print the md5 of the `crackme0x01` file
 - Print the first 0x50 bytes of the header of the binary in hexadecimal
 - What is the physical address of the `main` function?
 
@@ -383,9 +381,7 @@ Welcome to radare2!
 
 # Pratice
 
-- Print the md5 of the `crackme.01.bin` file
-	- External system command → `!md5 XXX / r2 -n`
-	- Interal system command → `oon` then `ph $s @ 0`
+- Print the md5 of the `crackme0x01` file → `oon` then `ph $s @ 0`
 - Print the first 0x50 bytes of the header of the binary in hexadecimal → `px 0x50 @ 0`
 - What is the physical address of the `main` function → `?p @ main`
 
@@ -418,7 +414,6 @@ Welcome to radare2!
 - agf - graph
 - ahi - immediates
 - ao/aod - opcodes
-- axt - xrefs
 
 ---
 
@@ -434,11 +429,11 @@ Welcome to radare2!
 
 # Analyze exercise
 
-- Analyze all functions with the default auto-analysis `aaa`
-- List functions by name, anything interesting? Can you rename some functions to something more meaningful `afl`
-- How many local variables does the subroutine at 0x0804842b have? `afv @ 0x0804842b`
-- Analyze opcode at offset 0x0804842 `ao @ 0x0804842b`
-- Use ahi to convert the immediate to a more meaningful base `ahi d @ 0x0804842b`
+- Analyze all functions with the default auto-analysis → `aaa`
+- List functions by name, anything interesting? Can you rename some functions to something more meaningful → `afl`
+- How many local variables does the subroutine at 0x0804842b have? → `afv @ 0x0804842b`
+- Analyze opcode at offset 0x0804842 → `ao @ 0x0804842b`
+- Use ahi to convert the immediate to a more meaningful base → `ahi d @ 0x0804842b`
 
 ---
 
@@ -501,7 +496,7 @@ Welcome to radare2!
 ```python
 import r2pipe
 
-r2 = r2pipe.open('./sushi-a6cb...98c8')
+r2 = r2pipe.open('./crackme0x01')
 r2.cmd('aa')
 print(r2.cmd('pdf'))
 r2.cmd('s main')
