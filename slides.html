@@ -393,7 +393,7 @@ class: middle, left
 # Pratice
 
 - Print the md5 of the `crackme0x01` file
-- Print the first 0x50 bytes of the header of the binary in hexadecimal
+- Print the first `0x50` bytes of the binary in hex
 - What is the physical address of the `main` function?
 
 ---
@@ -402,13 +402,15 @@ class: middle, left
 # Pratice
 
 - Print the md5 of the `crackme0x01` file → `oon` then `ph $s @ 0`
-- Print the first 0x50 bytes of the header of the binary in hexadecimal → `px 0x50 @ 0`
+- Print the first `0x50` bytes of the binary in hex→ `px 0x50 @ 0`
 - What is the physical address of the `main` function → `?p @ main`
 
 ---
 class: middle, left
 
 # modes
+
+You can append the following to every command:
 
 - `j` json
 - `q` quiet
@@ -430,13 +432,13 @@ class: middle, left
 
 # Analyze command
 
-- af/aaX - Analyse function / Auto-analaysis
-- afl/afi/Vv - function information
-- pdf/pdr - print disassembly function (linear/recursive)
-- afv - manipulate arguments and variables
-- agf - graph
-- ahi - immediates
-- ao/aod - opcodes
+- `af/`aa…` - Analyse function / Auto-analaysis
+- `afl`/`afi`/`Vv` - function information
+- `pdf`/`pdr` - print disassembly function (linear/recursive)
+- `afv` - manipulate arguments and variables
+- `agf` - graph
+- `ahi` - immediates
+- `ao`/`aod` - opcodes
 
 ---
 class: middle, left
@@ -787,19 +789,17 @@ void read_data(int fd, int size) {
  if ( size + 1 <= 0x400 ) {
   char buf[0x41C];
   int nbread = recv(fd, &buf, size, 0);
-  else {
-   nbread = nbread > 0x400 ? 1024; nbread;
-   if (!check_nonnull(&buf, nbread)) {
-    fprintf(stderr, "%s\n", "This entry had Non-ASCII characters.. […]");
-   } else {
-    char fb[0x80] = {0};
-    snprintf(&fb, 0x7F, "diary%llu.txt", global_cpt);
-    FILE* stream = fopen(&fb, "w");
-    if ( stream ) {
-     if ( nbread == fwrite(&buf, 1u, nbread, stream))
-      fflush(stream)
-     fclose_and_remove(stream, &fb);
-    }
+  nbread = nbread > 0x400 ? 1024; nbread;
+  if (!check_nonnull(&buf, nbread)) {
+   fprintf(stderr, "%s\n", "This entry had Non-ASCII characters.. […]");
+  } else {
+   char fb[0x80] = {0};
+   snprintf(&fb, 0x7F, "diary%llu.txt", global_cpt);
+   FILE* stream = fopen(&fb, "w");
+   if ( stream ) {
+    if ( nbread == fwrite(&buf, 1u, nbread, stream))
+     fflush(stream)
+    fclose_and_remove(stream, &fb);
    }
   }
  }
