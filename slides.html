@@ -275,7 +275,7 @@ class: middle, left
  ││ ││   ╰─────────────────────────────────────────╯
  │└─┘│
  ╰───╯
-[0x00004730]> 
+[0x00004730]>
 ```
 
 ---
@@ -457,8 +457,6 @@ class: middle, left
 - `pdf`/`pdr` - print disassembly function (linear/recursive)
 - `afv` - manipulate arguments and variables
 - `agf` - graph
-- `ahi` - immediates
-- `ao`/`aod` - opcodes
 
 ---
 class: middle, left
@@ -493,16 +491,6 @@ class: middle, left
 - `ao | grep name`
 - `ao > test.txt`
 - `ao >> test.txt`
-
----
-class: middle, left
-
-# Loops
-
-- classic loop : `@@=$$ $$+2`
-- foreach : `@@i`
-- loop over a flag: `afi @@ fcn.* ~name`
-- and many others... `@@?` ;)
 
 ---
 class: middle, left
@@ -551,6 +539,41 @@ r2.cmd('aa')
 print(r2.cmd('pdf'))
 r2.cmd('s main')
 print(r2.cmdj('pdfj'))
+```
+
+---
+class: middle, left
+# Script exercise
+
+Let's write a small python script:
+- use `/bin/ls` binary
+- get all functions
+- for each nonamed function print the first called (3) the functions does
+
+---
+class: middle, left
+# Script exercise
+
+```python
+import r2pipe
+
+r2 = r2pipe.open('/bin/ls')
+r2.cmd('aaa')
+r2.cmd('s main')
+
+renamedf = []
+func = ''
+functions = r2.cmdj('aflj')
+for i in functions:
+    func = ''
+    if "fcn." in i['name']:
+        subf = r2.cmdj('pdfj ' + i['name'])
+        for j in subf['ops']:
+            if j['type'] == 'call':
+                func = func + ' ' + j['disasm'].split('.')[-1]
+                if len(func) > 25:
+                    break
+        print(i['name'] + " → " + func)
 ```
 
 ---
@@ -965,7 +988,7 @@ class: middle, left
 0x08049110: pop ebx; pop edi; pop ebp; ret;
 0x080494cf: pop esi; pop edi; pop ebp; ret;
 0x0804956d: pop esi; pop edi; pop ebp; ret;
-[0x080488c0]> 
+[0x080488c0]>
 ```
 
 ---
@@ -1043,7 +1066,7 @@ class: middle, left
  │  ││   ╰─────────────────────────────────────╯
  │ ─╯│
  ╰───╯
-[0x00004730]> 
+[0x00004730]>
 ```
 
    </textarea>
