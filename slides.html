@@ -38,6 +38,8 @@
             margin-top: -95px;
             margin-left: -00px;
             color: #FAFAFA;
+						position: absolute;
+						top: 95px;
           }
           .remark-slide-content > inverse {
           width: 112px;
@@ -78,6 +80,7 @@
             text-align: left;
             margin-left: 15px;
             padding-top: 80px;
+						position: absolute;
           }
           .title-slide > h2  {
             margin-top: -25px;
@@ -223,6 +226,7 @@ class: middle, top
 ## Grehack 2019 — `radare2` workshop
 
 ---
+class: middle, left
 
 # Radare2 workshop!
 
@@ -236,6 +240,7 @@ class: middle, top
 Welcome to radare2!
 
 ---
+class: middle, left
 
 # Agenda
 
@@ -246,6 +251,7 @@ Welcome to radare2!
 4. How do I automate things in radare2?
 
 ---
+class: middle, left
 
 # Who are we?
 
@@ -263,6 +269,7 @@ Welcome to radare2!
 ### It's like vim in Dwarf Fortress, right?
 
 ---
+class: middle, left
 
 # What is radare2?
 
@@ -270,10 +277,12 @@ Welcome to radare2!
 - Open-sauce
 - Extensible
 - Command-line
+- ~700 contributors, 23k commits, 11 years old
 
 ---
+class: middle, left
 
-# Install radare2 ?
+# Installing radare2
 
 - `git clone https://github.com/radare/radare2`
 - `cd radare2`
@@ -287,6 +296,7 @@ Welcome to radare2!
 ### What do you mean "command line"?!
 
 ---
+class: middle, left
 
 # Commands
 
@@ -302,6 +312,7 @@ Welcome to radare2!
 
 
 ---
+class: middle, left
 
 # Commands (ex.)
 
@@ -310,6 +321,7 @@ Welcome to radare2!
 - How do I get the import information?
 
 ---
+class: middle, left
 
 # Commands (ex.)
 
@@ -321,6 +333,7 @@ Welcome to radare2!
 - Remember about `?*|grep`
 
 ---
+class: middle, left
 
 # The information command `i`
 
@@ -329,6 +342,7 @@ Welcome to radare2!
 - What are the strings present in a binary?
 
 ---
+class: middle, left
 
 # The information command `i`
 
@@ -337,6 +351,7 @@ Welcome to radare2!
 - What are the strings present in a binary → `izz`
 
 ---
+class: middle, left
 
 # Open command
 
@@ -346,6 +361,7 @@ Welcome to radare2!
 - `oo`, `oon`, `oow` reopen in a given mode
 
 ---
+class: middle, left
 
 # Print command
 
@@ -354,6 +370,7 @@ Welcome to radare2!
 - `p=` visualization mode
 
 ---
+class: middle, left
 
 # Seek command
 
@@ -363,6 +380,7 @@ Welcome to radare2!
 - `@` temporary seek
 
 ---
+class: middle, left
 
 # ! redirections
 
@@ -370,6 +388,7 @@ Welcome to radare2!
 - `~` vs `| grep`
 
 ---
+class: middle, left
 
 # Pratice
 
@@ -378,6 +397,7 @@ Welcome to radare2!
 - What is the physical address of the `main` function?
 
 ---
+class: middle, left
 
 # Pratice
 
@@ -386,6 +406,7 @@ Welcome to radare2!
 - What is the physical address of the `main` function → `?p @ main`
 
 ---
+class: middle, left
 
 # modes
 
@@ -395,6 +416,7 @@ Welcome to radare2!
 - `*` r2 command
 
 ---
+class: middle, left
 
 # Search command
 
@@ -404,6 +426,7 @@ Welcome to radare2!
 - `/R` - search Rop Gadgets
 
 ---
+class: middle, left
 
 # Analyze command
 
@@ -416,6 +439,7 @@ Welcome to radare2!
 - ao/aod - opcodes
 
 ---
+class: middle, left
 
 # Analyze exercise
 
@@ -426,6 +450,7 @@ Welcome to radare2!
 - Use ahi to convert the immediate to a more meaningful base
 
 ---
+class: middle, left
 
 # Analyze exercise
 
@@ -436,6 +461,7 @@ Welcome to radare2!
 - Use ahi to convert the immediate to a more meaningful base → `ahi d @ 0x0804842b`
 
 ---
+class: middle, left
 
 # Do you want to automate ?
 
@@ -443,6 +469,7 @@ Welcome to radare2!
 - `r2pipe` (IPC)
 
 ---
+class: middle, left
 
 # Internal basics, bash FTW
 
@@ -452,6 +479,7 @@ Welcome to radare2!
 - `ao >> test.txt`
 
 ---
+class: middle, left
 
 # Internal loops
 
@@ -461,6 +489,7 @@ Welcome to radare2!
 - and many others... `@@?` ;)
 
 ---
+class: middle, left
 
 # Define Macros
 
@@ -470,12 +499,14 @@ Welcome to radare2!
 - remove it : `(-foobar)`
 
 ---
+class: middle, left
 
 # Macros with arguments
 
 - `(foobar arg1, pd $0)`
 
 ---
+class: middle, left
 
 # You don't like r2 cli ?
 
@@ -483,6 +514,7 @@ Welcome to radare2!
 - NodeJS, Python, Java, Ruby, ...
 
 ---
+class: middle, left
 
 # Install r2pipe
 
@@ -490,6 +522,7 @@ Welcome to radare2!
 - `pip install r2pipe`
 
 ---
+class: middle, left
 
 # r2pipe use
 
@@ -511,6 +544,7 @@ print(r2.cmd('pdf'))
 ### Excellent, we can attack in any direction!
 
 ---
+class: middle, left
 
 # Pop Quizz
 
@@ -524,6 +558,7 @@ print(r2.cmd('pdf'))
 
 
 ---
+class: middle, left
 
 # Sushi — BSides Vancouver CTF 2015
 
@@ -533,6 +568,7 @@ print(r2.cmd('pdf'))
 - Super-easy challenge
 
 ---
+class: middle, left
 
 # Recon and mitigations
 
@@ -546,6 +582,7 @@ $ r2 ./sushi-a6cbcb6...98cb4f98c8
 ```
 
 ---
+class: middle, left
 
 # How to run the binary?
 
@@ -557,6 +594,7 @@ $ rarun2 -h
 ```
 
 ---
+class: middle, left
 
 # Reversing (ex.)
 
@@ -570,6 +608,7 @@ $ rarun2 -h
 What is the main function doing?
 
 ---
+class: middle, left
 
 # Reversing (ex.)
 
@@ -596,6 +635,7 @@ int main(int argc, char** argv) {
 ```
 
 ---
+class: middle, left
 
 # Getting RIP control (ex.)
 
@@ -609,6 +649,7 @@ $ r2 -d ./sushi-a6cbc...8cb4f98c8
 [0x004005f2]> wopO `pxW 4 @ rsp~[1]`
 ```
 ---
+class: middle, left
 
 # Getting RIP control (ex.)
 
@@ -625,6 +666,7 @@ $ r2 -d ./sushi-a6cbc...8cb4f98c8
 72 chars until RIP control
 
 ---
+class: middle, left
 
 # Writing an exploit (ex.)
 
@@ -640,6 +682,7 @@ $ ragg2 -z -i exec
 Can you build a working exploit?
 
 ---
+class: middle, left
 
 # Exploit
 
@@ -665,6 +708,7 @@ while(True):
 ```
 
 ---
+class: middle, left
 
 # CSAW Quals 2013 - Diary (exp300)
 
@@ -674,6 +718,7 @@ while(True):
 - easy CTF challenge
 
 ---
+class: middle, left
 
 # Mitigations (ex.)
 
@@ -684,6 +729,7 @@ while(True):
 - ASLR?
 
 ---
+class: middle, left
 
 # Mitigations (ex.)
 
@@ -693,8 +739,8 @@ while(True):
 - Canary → Nope
 - ASLR → Yup
 
-
 ---
+class: middle, left
 
 # What is the binary doing? (ex.)
 
@@ -702,10 +748,12 @@ while(True):
 - Hint2: on what port does it listen?
 
 ---
+class: middle, left
 
 # Find the username/password (ex.)
 
 ---
+class: middle, left
 
 # Find the username/password (ex.)
 
@@ -722,6 +770,7 @@ while(True):
 - passwd: `S1mplePWD`
 
 ---
+class: middle, left
 
 # What is the binary doing? (ex.)
 
@@ -729,6 +778,7 @@ while(True):
 - Hint2: What is it doing with the binary?
 
 ---
+class: middle, left
 
 # What is the binary doing?
 
@@ -757,6 +807,7 @@ void read_data(int fd, int size) {
 ````
 
 ---
+class: middle, left
 
 # What is the binary doing?
 
@@ -769,6 +820,7 @@ TL;DR
 1. Delete the file
 
 ---
+class: middle, left
 
 # Find the vulnerability (ex.)
 
@@ -777,6 +829,7 @@ TL;DR
 
 
 ---
+class: middle, left
 
 # Find the vulnerability (ex.)
 
@@ -785,6 +838,7 @@ TL;DR
 - resulting in a linear stack-based buffer-overflow
 
 ---
+class: middle, left
 
 # Getting eip control (ex.)
 
@@ -801,6 +855,7 @@ $ r2 -d ./fil_chal
 1056 bytes before overwriting EIP
 
 ---
+class: middle, left
 
 # Designing our ROP chain
 
@@ -814,6 +869,7 @@ $ r2 -d ./fil_chal
 But…
 
 ---
+class: middle, left
 
 # Designing our ROP chain
 
@@ -828,6 +884,7 @@ But y'all have different libc, and I'm lazy.
 
 
 ---
+class: middle, left
 
 # Plot twist
 
@@ -838,6 +895,7 @@ But y'all have different libc, and I'm lazy.
 5. Send our reverse-shell shellcode
 
 ---
+class: middle, left
 
 # Finding a writteable place (ex.)
 
@@ -858,6 +916,7 @@ hit breakpoint at: 8048974
 ```
 
 ---
+class: middle, left
 
 # Finding a `pop;pop;pop;ret` gadget (ex.)
 
@@ -865,6 +924,7 @@ hit breakpoint at: 8048974
 - We want `rop` gadgets with a `len`gth of 4 instructions
 
 ---
+class: middle, left
 
 # Finding a `pop;pop;pop;ret` gadget
 
@@ -877,8 +937,8 @@ hit breakpoint at: 8048974
 [0x080488c0]> 
 ```
 
-
 ---
+class: middle, left
 
 # Exploit
 
@@ -893,23 +953,30 @@ writeable addr
 writeable addr
 ```
 
-
 ---
+class: middle, left
 
 # How can I get r2 swag?
 
 ### How much did you say for the radare2 plumbus?
 
 ---
+class: middle, left
 
 # The same crackme, twice
+
+Two crackmes:
 
 - One is in SPARC\_64
 - One is in x86\_64, but __heavily packed__
 
+Your choice ;)
+
 We'll trade the _amazing_ r2flag for a short presentation of your solution :)
 
 ---
+class: middle, left
+
 # Documentations and friendly neighbours
 
 
@@ -918,10 +985,15 @@ We'll trade the _amazing_ r2flag for a short presentation of your solution :)
 - The [r2con]( https://www.radare.org/con/ )
 
 ---
+class: middle, left
 
 # Cheers
 
- - Xarkes for inviting us!
+- Xarkes for inviting us!
+- All the r2 contributors
+- You all, for attenting our workshop ♥
+
+Now go score some flags at the CTF!
 
 ---
 background-position: center;
