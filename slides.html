@@ -839,7 +839,7 @@ But y'all have different libc, and I'm lazy.
 
 ---
 
-# Find a writteable place (ex.)
+# Finding a writteable place (ex.)
 
 ```nasm
 $ r2 -d ./Dairy/fil_chal
@@ -856,6 +856,27 @@ hit breakpoint at: 8048974
 24  0x00002008    0x0 0x0804b008   0x18 -rw- .bss
 [0x08048974]>
 ```
+
+---
+
+# Finding a `pop;pop;pop;ret` gadget (ex.)
+
+- *Searching* (like you would do in vim) for `R`op gadgets.
+- We want `rop` gadgets with a `len`gth of 4 instructions
+
+---
+
+# Finding a `pop;pop;pop;ret` gadget
+
+```nasm
+[0x080488c0]> e rop.len = 4
+[0x080488c0]> "/Rq pop;pop;pop"
+0x08049110: pop ebx; pop edi; pop ebp; ret;
+0x080494cf: pop esi; pop edi; pop ebp; ret;
+0x0804956d: pop esi; pop edi; pop ebp; ret;
+[0x080488c0]> 
+```
+
 
 ---
 
@@ -881,7 +902,10 @@ writeable addr
 
 ---
 
-# R2con crackme
+# The same crackme, twice
+
+- One is in SPARC\_64
+- One is in x86\_64, but __heavily packed__
 
 We'll trade the _amazing_ r2flag for a short presentation of your solution :)
 
