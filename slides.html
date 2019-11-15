@@ -400,6 +400,39 @@ Welcome to radare2!
 
 ---
 
+# Analyze command
+
+- af/aaX - Analyse function / Auto-analaysis
+- afl/afi/Vv - function information
+- pdf/pdr - print disassembly function (linear/recursive)
+- afv - manipulate arguments and variables
+- agf - graph
+- ahi - immediates
+- ao/aod - opcodes
+- axt - xrefs
+
+---
+
+# Analyze exercise
+
+- Analyze all functions with the default auto-analysis
+- List functions by name, anything interesting? Can you rename some functions to something more meaningful
+- How many local variables does the subroutine at 0x0804842b have?
+- Analyze opcode at offset 0x0804842b
+- Use ahi to convert the immediate to a more meaningful base
+
+---
+
+# Analyze exercise
+
+- Analyze all functions with the default auto-analysis `aaa`
+- List functions by name, anything interesting? Can you rename some functions to something more meaningful `afl`
+- How many local variables does the subroutine at 0x0804842b have? `afv @ 0x0804842b`
+- Analyze opcode at offset 0x0804842 `ao @ 0x0804842b`
+- Use ahi to convert the immediate to a more meaningful base `ahi d @ 0x0804842b`
+
+---
+
 # Do you want to automate ?
 
 - internal ways of sequencing commands
@@ -678,7 +711,7 @@ while(True):
 99  0x00001a4f 0x08049a4f 8   9    .rodata   ascii   csaw2013
 100 0x00001a58 0x08049a58 9   10   .rodata   ascii   S1mplePWD
 117 0x000020c0 0x0000008e 7   8    .shstrtab ascii   .rodata
-[0x080488c0]> 
+[0x080488c0]>
 ```
 
 - login: `csaw2013`
