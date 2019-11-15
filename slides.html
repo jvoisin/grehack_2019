@@ -507,7 +507,7 @@ class: middle, left
 # R2script is too horrible? Just use r2pipe!
 
 - r2script is awful, bindings sucks, … all hail r2pipe!
-- It works with your favourite language: NodeJS, Python, Java, Ruby, Prolog, OCaml, …
+- It works with your favourite language: NodeJS, Python, Java, Ruby, Prolog, OCaml, Haskell, Javascript, Rust, C, …
 
 ---
 class: middle, left
@@ -516,6 +516,7 @@ class: middle, left
 
 - `npm install r2pipe`
 - `pip install r2pipe`
+- …
 
 ---
 class: middle, left
@@ -529,8 +530,14 @@ r2 = r2pipe.open('./crackme0x01')
 r2.cmd('aa')
 print(r2.cmd('pdf'))
 r2.cmd('s main')
-print(r2.cmd('pdf'))
+print(r2.cmdj('pdfj'))
 ```
+
+---
+
+# So far so good?
+
+## Questions?
 
 ---
 
